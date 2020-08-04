@@ -1,22 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { HeroService } from '../hero.service';
-import {Hero} from '../hero'
+import { Component, OnInit, Input } from '@angular/core';
+import { Hero } from '../hero';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
+
 export class DashboardComponent implements OnInit {
   heroes: Hero[] = [];
-  constructor(
-    private heroService: HeroService
-  ) { }
+  constructor() {}
 
   ngOnInit(): void {
-    this.getHeroes();
+    this.getHeroesOnLocalStorage();
   }
-  getHeroes(): void {
-    this.heroService.getHeroes()
-      .subscribe(heroes=>this.heroes=heroes);
+
+  getHeroesOnLocalStorage() : void {
+    const tempHeroes: Hero[] = [];
+    const keys = Object.keys(localStorage);
+    keys.forEach(key => {
+      if(key.includes('hero')) {
+        const obj:Hero =JSON.parse(localStorage.getItem(key));
+        tempHeroes.push(obj);   
+      }
+    });
+    console.log(tempHeroes);
+    this.heroes = tempHeroes;
   }
+  
 }
