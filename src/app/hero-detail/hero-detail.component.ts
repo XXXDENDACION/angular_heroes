@@ -36,7 +36,8 @@ export class HeroDetailComponent implements OnInit {
                                                Validators.email
                                               ])
     })
-    console.log("HeroDetailComponent -> this.hero", this.hero)
+    console.log("HeroDetailComponent -> this.myForm", this.myForm)
+    
 
   }
   
@@ -49,7 +50,6 @@ export class HeroDetailComponent implements OnInit {
   }
 
   save(): void {
-    console.log(this.myForm);
     const id = +this.route.snapshot.paramMap.get('id');
     localStorage.setItem(`hero${id}`,JSON.stringify({
       id: id,
